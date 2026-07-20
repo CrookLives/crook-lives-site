@@ -111,8 +111,8 @@
 <section>
   <div class="wrap">
 
-    <div class="side-label">Side A — Tees</div>
-    <div class="shop-grid">
+    <div class="side-label" id="live-products-label">Side A — Live from Printify</div>
+    <div class="shop-grid" id="live-products-grid">
       <div class="record">
         <div class="sleeve">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.4"><path d="M8 4 L4 7 L6 10 L8 8.5 V20 H16 V8.5 L18 10 L20 7 L16 4 L14 6 H10 Z"/></svg>
@@ -120,14 +120,14 @@
         <p class="cat">Season 1 Collection</p>
         <h3>Zombie Hands Tee</h3>
         <p class="price">Synced from Printify</p>
-        <a class="buy" href="#">View on Printify →</a>
+        <a class="buy" href="https://crook-lives.printify.me/products" target="_blank" rel="noopener">View on Printify →</a>
       </div>
       <div class="record ghost">
         <div class="sleeve">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.4"><path d="M8 4 L4 7 L6 10 L8 8.5 V20 H16 V8.5 L18 10 L20 7 L16 4 L14 6 H10 Z"/></svg>
         </div>
         <p class="cat">Add a design</p>
-        <h3>Next tee slot</h3>
+        <h3>Next slot</h3>
         <p class="price">—</p>
         <a class="buy" href="#">—</a>
       </div>
@@ -136,61 +136,56 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.4"><path d="M8 4 L4 7 L6 10 L8 8.5 V20 H16 V8.5 L18 10 L20 7 L16 4 L14 6 H10 Z"/></svg>
         </div>
         <p class="cat">Add a design</p>
-        <h3>Next tee slot</h3>
-        <p class="price">—</p>
-        <a class="buy" href="#">—</a>
-      </div>
-    </div>
-
-    <div class="side-label">Side B — Hoodies</div>
-    <div class="shop-grid">
-      <div class="record ghost">
-        <div class="sleeve">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.4"><path d="M12 3c-2 0-3.4 1.3-3.7 3L6 7l-2 3 2 2 1-1v9h10v-9l1 1 2-2-2-3-2.3-1C15.4 4.3 14 3 12 3z"/><path d="M9.3 13.5h5.4"/></svg>
-        </div>
-        <p class="cat">Add a design</p>
-        <h3>Next hoodie slot</h3>
-        <p class="price">—</p>
-        <a class="buy" href="#">—</a>
-      </div>
-      <div class="record ghost">
-        <div class="sleeve">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.4"><path d="M12 3c-2 0-3.4 1.3-3.7 3L6 7l-2 3 2 2 1-1v9h10v-9l1 1 2-2-2-3-2.3-1C15.4 4.3 14 3 12 3z"/><path d="M9.3 13.5h5.4"/></svg>
-        </div>
-        <p class="cat">Add a design</p>
-        <h3>Next hoodie slot</h3>
-        <p class="price">—</p>
-        <a class="buy" href="#">—</a>
-      </div>
-    </div>
-
-    <div class="side-label">Side C — Hats</div>
-    <div class="shop-grid">
-      <div class="record ghost">
-        <div class="sleeve">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.4"><path d="M4 15a8 8 0 0 1 16 0"/><rect x="3" y="15" width="18" height="2.6" rx="1.2"/></svg>
-        </div>
-        <p class="cat">Add a design</p>
-        <h3>Next hat slot</h3>
-        <p class="price">—</p>
-        <a class="buy" href="#">—</a>
-      </div>
-      <div class="record ghost">
-        <div class="sleeve">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.4"><path d="M4 15a8 8 0 0 1 16 0"/><rect x="3" y="15" width="18" height="2.6" rx="1.2"/></svg>
-        </div>
-        <p class="cat">Add a design</p>
-        <h3>Next hat slot</h3>
+        <h3>Next slot</h3>
         <p class="price">—</p>
         <a class="buy" href="#">—</a>
       </div>
     </div>
 
     <div class="note" style="margin-top:44px;">
-      <p style="margin:0;"><strong>Note:</strong> this grid is a template — once your Printify catalog is wired in, real products, prices, and images replace these placeholders automatically.</p>
+      <p style="margin:0;" id="live-products-status"><strong>Note:</strong> this grid updates automatically from your Printify catalog once the connection is configured. Until then, it shows these placeholders.</p>
     </div>
   </div>
 </section>
+
+<script>
+  async function loadPrintifyProducts() {
+    const grid = document.getElementById('live-products-grid');
+    const label = document.getElementById('live-products-label');
+    const status = document.getElementById('live-products-status');
+    try {
+      const res = await fetch('/.netlify/functions/get-products');
+      if (!res.ok) throw new Error('Function returned ' + res.status);
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+      if (!data.products || !data.products.length) {
+        status.innerHTML = '<strong>Note:</strong> connected to Printify, but no visible products were found yet.';
+        return;
+      }
+
+      label.textContent = 'Live from Printify';
+      grid.innerHTML = '';
+      data.products.forEach(function (p) {
+        const card = document.createElement('div');
+        card.className = 'record';
+        card.innerHTML =
+          '<div class="sleeve">' +
+            (p.image ? '<img src="' + p.image + '" alt="' + p.title.replace(/"/g, '&quot;') + '" style="width:100%;height:100%;object-fit:cover;">' : '') +
+          '</div>' +
+          '<p class="cat">Printify</p>' +
+          '<h3>' + p.title + '</h3>' +
+          '<p class="price">' + (p.price ? '$' + p.price : '') + '</p>' +
+          '<a class="buy" href="https://crook-lives.printify.me/products" target="_blank" rel="noopener">View on Printify →</a>';
+        grid.appendChild(card);
+      });
+      status.innerHTML = '<strong>Live:</strong> this grid is pulling directly from your Printify catalog.';
+    } catch (err) {
+      console.warn('Could not load live Printify products, showing placeholders instead:', err);
+      status.innerHTML = '<strong>Note:</strong> live sync isn\'t connected yet, so these are placeholders.';
+    }
+  }
+  loadPrintifyProducts();
+</script>
 
 <footer id="contact">
   <div class="wrap">
