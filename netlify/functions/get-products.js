@@ -1,6 +1,14 @@
 // Fetches this shop's full product catalog from Printify (handling pagination)
 // and returns a simplified, filtered list for the Shop page to render.
 // Runs server-side so the API token is never exposed to the browser.
+
+let hiddenProductIds = [];
+try {
+  hiddenProductIds = require("./hidden-products.json");
+} catch (e) {
+  hiddenProductIds = [];
+}
+
 exports.handler = async function (event, context) {
   const token = process.env.PRINTIFY_API_TOKEN;
   const shopId = process.env.PRINTIFY_SHOP_ID;
@@ -48,6 +56,7 @@ exports.handler = async function (event, context) {
 
     const products = allRawProducts
       .filter((p) => {
+        if (hiddenProductIds.includes(p.id)) return false;
         if (!p.visible) return false;
         const sellableVariants = (p.variants || []).filter(
           (v) => v.is_enabled && v.is_available !== false
