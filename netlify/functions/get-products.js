@@ -37,10 +37,18 @@ exports.handler = async function (event, context) {
     const rawProducts = data.data || data; // handles paginated or plain array responses
 
     const products = (Array.isArray(rawProducts) ? rawProducts : [])
-      .filter((p) => p.visible)
+      .filter((p) => {
+        if (!p.visible) return false;
+        const sellableVariants = (p.variants || []).filter(
+          (v) => v.is_enabled && v.is_available !== false
+        );
+        return sellableVariants.length > 0;
+      })
       .map((p) => {
-        const enabledVariants = (p.variants || []).filter((v) => v.is_enabled);
-        const prices = enabledVariants
+        const sellableVariants = (p.variants || []).filter(
+          (v) => v.is_enabled && v.is_available !== false
+        );
+        const prices = sellableVariants
           .map((v) => v.price)
           .filter((price) => typeof price === "number");
         const lowestPriceCents = prices.length ? Math.min(...prices) : null;
