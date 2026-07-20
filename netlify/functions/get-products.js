@@ -75,7 +75,10 @@ exports.handler = async function (event, context) {
 
     return {
       statusCode: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store, no-cache, must-revalidate"
+      },
       body: JSON.stringify({ products, totalFetched: allRawProducts.length })
     };
   } catch (err) {
