@@ -1,6 +1,6 @@
-// Fetches this shop's product catalog from Printify and returns a simplified
-// list for the Shop page to render. Runs server-side so the API token is
-// never exposed to the browser.
+// Fetches this shop's full product catalog from Printify (handling pagination)
+// and returns a simplified, filtered list for the Shop page to render.
+// Runs server-side so the API token is never exposed to the browser.
 exports.handler = async function (event, context) {
   const token = process.env.PRINTIFY_API_TOKEN;
   const shopId = process.env.PRINTIFY_SHOP_ID;
@@ -15,28 +15,38 @@ exports.handler = async function (event, context) {
   }
 
   try {
-    const response = await fetch(
-      `https://api.printify.com/v1/shops/${shopId}/products.json`,
-      {
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "User-Agent": "CrookLivesSite"
+    let allRawProducts = [];
+    let page = 1;
+    let lastPage = 1;
+
+    do {
+      const response = await fetch(
+        `https://api.printify.com/v1/shops/${shopId}/products.json?page=${page}`,
+        {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "User-Agent": "CrookLivesSite"
+          }
         }
+      );
+
+      if (!response.ok) {
+        const details = await response.text();
+        return {
+          statusCode: response.status,
+          body: JSON.stringify({ error: `Printify API error (${response.status})`, details })
+        };
       }
-    );
 
-    if (!response.ok) {
-      const details = await response.text();
-      return {
-        statusCode: response.status,
-        body: JSON.stringify({ error: `Printify API error (${response.status})`, details })
-      };
-    }
+      const data = await response.json();
+      const pageProducts = Array.isArray(data) ? data : data.data || [];
+      allRawProducts = allRawProducts.concat(pageProducts);
 
-    const data = await response.json();
-    const rawProducts = data.data || data; // handles paginated or plain array responses
+      lastPage = data.last_page || 1;
+      page += 1;
+    } while (page <= lastPage);
 
-    const products = (Array.isArray(rawProducts) ? rawProducts : [])
+    const products = allRawProducts
       .filter((p) => {
         if (!p.visible) return false;
         const sellableVariants = (p.variants || []).filter(
@@ -66,7 +76,7 @@ exports.handler = async function (event, context) {
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ products })
+      body: JSON.stringify({ products, totalFetched: allRawProducts.length })
     };
   } catch (err) {
     return {
