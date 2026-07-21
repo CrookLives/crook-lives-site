@@ -118,47 +118,24 @@
   <div class="wrap">
     <span class="stamp-label">Full catalog</span>
     <h1>Shop</h1>
-    <p>Every piece, pulled from Printify. For now each item checks out on Printify's own page — full cart integration lands in phase two.</p>
+    <p>Every piece here is in stock now. Tap an item to check out securely through Printify.</p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
 
-    <div class="side-label" id="live-products-label">Side A — Live from Printify</div>
+    <div class="side-label" id="live-products-label">Side A — In Stock Now</div>
     <div class="shop-grid" id="live-products-grid">
-      <div class="record">
-        <div class="sleeve">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.4"><path d="M8 4 L4 7 L6 10 L8 8.5 V20 H16 V8.5 L18 10 L20 7 L16 4 L14 6 H10 Z"/></svg>
-        </div>
-        <p class="cat">Season 1 Collection</p>
-        <h3>Zombie Hands Tee</h3>
-        <p class="price">Synced from Printify</p>
-        <a class="buy" href="https://crook-lives.printify.me/products" target="_blank" rel="noopener">View on Printify →</a>
-      </div>
       <div class="record ghost">
-        <div class="sleeve">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.4"><path d="M8 4 L4 7 L6 10 L8 8.5 V20 H16 V8.5 L18 10 L20 7 L16 4 L14 6 H10 Z"/></svg>
-        </div>
-        <p class="cat">Add a design</p>
-        <h3>Next slot</h3>
-        <p class="price">—</p>
-        <a class="buy" href="#">—</a>
-      </div>
-      <div class="record ghost">
-        <div class="sleeve">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.4"><path d="M8 4 L4 7 L6 10 L8 8.5 V20 H16 V8.5 L18 10 L20 7 L16 4 L14 6 H10 Z"/></svg>
-        </div>
-        <p class="cat">Add a design</p>
-        <h3>Next slot</h3>
-        <p class="price">—</p>
-        <a class="buy" href="#">—</a>
+        <div class="sleeve"></div>
+        <p class="cat">&nbsp;</p>
+        <h3>Loading the shop…</h3>
+        <p class="price">&nbsp;</p>
+        <a class="buy" href="#">&nbsp;</a>
       </div>
     </div>
 
-    <div class="note" style="margin-top:44px;">
-      <p style="margin:0;" id="live-products-status"><strong>Note:</strong> this grid updates automatically from your Printify catalog once the connection is configured. Until then, it shows these placeholders.</p>
-    </div>
   </div>
 </section>
 
@@ -166,18 +143,17 @@
   async function loadPrintifyProducts() {
     const grid = document.getElementById('live-products-grid');
     const label = document.getElementById('live-products-label');
-    const status = document.getElementById('live-products-status');
     try {
       const res = await fetch('/.netlify/functions/get-products?t=' + Date.now(), { cache: 'no-store' });
       if (!res.ok) throw new Error('Function returned ' + res.status);
       const data = await res.json();
       if (data.error) throw new Error(data.error);
       if (!data.products || !data.products.length) {
-        status.innerHTML = '<strong>Note:</strong> connected to Printify, but no visible products were found yet.';
+        grid.innerHTML = '<p style="grid-column:1/-1;">New drops loading soon — check back shortly.</p>';
         return;
       }
 
-      label.textContent = 'Live from Printify';
+      label.textContent = 'Side A — In Stock Now';
       grid.innerHTML = '';
       data.products.forEach(function (p) {
         const card = document.createElement('div');
@@ -186,16 +162,15 @@
           '<div class="sleeve">' +
             (p.image ? '<img src="' + p.image + '" alt="' + p.title.replace(/"/g, '&quot;') + '" style="width:100%;height:100%;object-fit:cover;">' : '') +
           '</div>' +
-          '<p class="cat">Printify</p>' +
+          '<p class="cat">In Stock</p>' +
           '<h3>' + p.title + '</h3>' +
           '<p class="price">' + (p.price ? '$' + p.price : '') + '</p>' +
-          '<a class="buy" href="https://crook-lives.printify.me/products" target="_blank" rel="noopener">View on Printify →</a>';
+          '<a class="buy" href="https://crook-lives.printify.me/products" target="_blank" rel="noopener">Buy Now →</a>';
         grid.appendChild(card);
       });
-      status.innerHTML = '<strong>Live:</strong> this grid is pulling directly from your Printify catalog.';
     } catch (err) {
-      console.warn('Could not load live Printify products, showing placeholders instead:', err);
-      status.innerHTML = '<strong>Note:</strong> live sync isn\'t connected yet, so these are placeholders.';
+      console.warn('Could not load live Printify products:', err);
+      grid.innerHTML = '<p style="grid-column:1/-1;">The shop is taking a moment to load — refresh in a bit, or check back soon.</p>';
     }
   }
   loadPrintifyProducts();
