@@ -274,35 +274,58 @@
     <div class="section-head">
       <span class="stamp-label">SZN.01</span>
       <h2 style="margin-top:14px;">Featured Drop</h2>
-      <p>Live product feed pulls straight from Printify. Tap a track to check it out.</p>
+      <p>A few things from what's in stock right now. Tap a track to check it out.</p>
     </div>
     <div class="side-label">Side A</div>
-    <div class="track">
-      <span class="idx">A1</span>
-      <div>
-        <h3>Zombie Hands Tee</h3>
-        <p>Season 1 Collection — graffiti-inspired graphic tee, unisex fit.</p>
+    <div id="featured-tracklist">
+      <div class="track ghost">
+        <span class="idx">—</span>
+        <div>
+          <h3>Loading the drop…</h3>
+          <p>&nbsp;</p>
+        </div>
+        <a class="play" href="#" aria-label="Loading"><svg viewBox="0 0 24 24" fill="var(--ink)"><path d="M8 5v14l11-7z"/></svg></a>
       </div>
-      <a class="play" href="#" aria-label="View product"><svg viewBox="0 0 24 24" fill="var(--ink)"><path d="M8 5v14l11-7z"/></svg></a>
     </div>
-    <div class="track ghost">
-      <span class="idx">A2</span>
-      <div>
-        <h3>Next drop slot</h3>
-        <p>Add your next design and it plays here.</p>
-      </div>
-      <a class="play" href="#" aria-label="Coming soon"><svg viewBox="0 0 24 24" fill="var(--ink)"><path d="M8 5v14l11-7z"/></svg></a>
-    </div>
-    <div class="track ghost">
-      <span class="idx">A3</span>
-      <div>
-        <h3>Next drop slot</h3>
-        <p>Add your next design and it plays here.</p>
-      </div>
-      <a class="play" href="#" aria-label="Coming soon"><svg viewBox="0 0 24 24" fill="var(--ink)"><path d="M8 5v14l11-7z"/></svg></a>
-    </div>
+    <p style="margin-top:24px;"><a href="shop.html" class="stamp-label" style="text-decoration:none;">See the full shop →</a></p>
   </div>
 </section>
+
+<script>
+  async function loadFeaturedDrop() {
+    const list = document.getElementById('featured-tracklist');
+    const idxLabels = ['A1', 'A2', 'A3', 'A4', 'A5'];
+    try {
+      const res = await fetch('/.netlify/functions/get-products?t=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) throw new Error('Function returned ' + res.status);
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+      if (!data.products || !data.products.length) {
+        list.innerHTML = '<p>New drops loading soon — check back shortly.</p>';
+        return;
+      }
+
+      const featured = data.products.slice(0, 3);
+      list.innerHTML = '';
+      featured.forEach(function (p, i) {
+        const row = document.createElement('div');
+        row.className = 'track';
+        row.innerHTML =
+          '<span class="idx">' + (idxLabels[i] || (i + 1)) + '</span>' +
+          '<div>' +
+            '<h3>' + p.title + '</h3>' +
+            '<p>' + (p.price ? 'In stock now — $' + p.price : 'In stock now') + '</p>' +
+          '</div>' +
+          '<a class="play" href="https://crook-lives.printify.me/products" target="_blank" rel="noopener" aria-label="Buy ' + p.title.replace(/"/g, '&quot;') + '"><svg viewBox="0 0 24 24" fill="var(--ink)"><path d="M8 5v14l11-7z"/></svg></a>';
+        list.appendChild(row);
+      });
+    } catch (err) {
+      console.warn('Could not load featured drop:', err);
+      list.innerHTML = '<p>The shop is taking a moment to load — refresh in a bit, or check back soon.</p>';
+    }
+  }
+  loadFeaturedDrop();
+</script>
 
 <section id="reviews" style="display:flex; justify-content:center;">
   <div class="wrap" style="text-align:center; display:flex; flex-direction:column; align-items:center;">
