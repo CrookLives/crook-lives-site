@@ -144,7 +144,7 @@
     const grid = document.getElementById('live-products-grid');
     const label = document.getElementById('live-products-label');
     try {
-      const res = await fetch('/.netlify/functions/get-products?t=' + Date.now(), { cache: 'no-store' });
+      const res = await fetch('/.netlify/functions/get-products');
       if (!res.ok) throw new Error('Function returned ' + res.status);
       const data = await res.json();
       if (data.error) throw new Error(data.error);
