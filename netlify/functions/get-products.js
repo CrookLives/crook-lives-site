@@ -86,7 +86,7 @@ exports.handler = async function (event, context) {
       statusCode: 200,
       headers: {
         "Content-Type": "application/json",
-        "Cache-Control": "no-store, no-cache, must-revalidate"
+        "Cache-Control": "public, max-age=300"
       },
       body: JSON.stringify({ products, totalFetched: allRawProducts.length })
     };
