@@ -69,11 +69,12 @@
     background:var(--paper-dark);
     border:2px dashed var(--ink);
     display:flex; flex-direction:column; align-items:center; justify-content:center;
-    gap:8px; position:relative;
+    gap:8px; position:relative; overflow:hidden;
   }
+  .photo-tile img{ width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
   .photo-tile svg{ width:34px; height:34px; opacity:0.45; }
   .photo-tile span{ font-family:'IBM Plex Mono', monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.08em; opacity:0.6; }
-  .photo-tile .tape{ position:absolute; top:-12px; left:50%; margin-left:-32px; width:64px; height:22px; background:rgba(255,255,255,0.55); border:1px solid rgba(27,23,16,0.15); }
+  .photo-tile .tape{ position:absolute; top:-12px; left:50%; margin-left:-32px; width:64px; height:22px; background:rgba(255,255,255,0.55); border:1px solid rgba(27,23,16,0.15); z-index:2; }
 </style>
 </head>
 <body>
@@ -98,7 +99,7 @@
   <div class="wrap">
     <span class="stamp-label">On the wall</span>
     <h1>Gallery</h1>
-    <p>Real customers, real fits, real walls. This is where the photos and video go once you've got them — drop them in and the tiles fill in.</p>
+    <p>Real customers, real fits, real walls.</p>
   </div>
 </section>
 
@@ -107,39 +108,45 @@
     <div class="photo-wall">
       <div class="photo-tile" style="transform:rotate(-3deg);">
         <div class="tape"></div>
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.6"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-2h5L16 7"/><circle cx="12" cy="13.5" r="3.5"/></svg>
-        <span>Add photo</span>
+        <img src="images/gallery/gallery-1.jpg" alt="Crook Lives graphic tee flat lay with spray paint cans and a respirator mask">
       </div>
       <div class="photo-tile" style="transform:rotate(2deg);">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.6"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-2h5L16 7"/><circle cx="12" cy="13.5" r="3.5"/></svg>
-        <span>Add photo</span>
+        <img src="images/gallery/gallery-2.jpg" alt="Crook Lives tee worn at night with a spray-can graphic design">
       </div>
       <div class="photo-tile" style="transform:rotate(-1deg);">
         <div class="tape"></div>
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.6"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-2h5L16 7"/><circle cx="12" cy="13.5" r="3.5"/></svg>
-        <span>Add photo</span>
+        <img src="images/gallery/gallery-3.jpg" alt="Group wearing Crook Lives shirts in front of a graffiti mural">
       </div>
       <div class="photo-tile" style="transform:rotate(3deg);">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.6"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-2h5L16 7"/><circle cx="12" cy="13.5" r="3.5"/></svg>
-        <span>Add photo</span>
+        <img src="images/gallery/gallery-4.jpg" alt="Crook Lives tee worn next to a motorcycle">
       </div>
       <div class="photo-tile" style="transform:rotate(1deg);">
         <div class="tape"></div>
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.6"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-2h5L16 7"/><circle cx="12" cy="13.5" r="3.5"/></svg>
-        <span>Add photo</span>
+        <img src="images/gallery/gallery-5.jpg" alt="Crook Lives tee worn in front of a purple bubble-letter graffiti mural">
       </div>
       <div class="photo-tile" style="transform:rotate(-2deg);">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.6"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-2h5L16 7"/><circle cx="12" cy="13.5" r="3.5"/></svg>
-        <span>Add photo</span>
+        <img src="images/gallery/gallery-6.jpg" alt="Crook Lives apparel photo">
       </div>
       <div class="photo-tile" style="transform:rotate(2deg);">
         <div class="tape"></div>
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.6"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-2h5L16 7"/><circle cx="12" cy="13.5" r="3.5"/></svg>
-        <span>Add photo</span>
+        <img src="images/gallery/gallery-7.jpg" alt="Close-up of a Crook Lives graphic tee design">
       </div>
       <div class="photo-tile" style="transform:rotate(-3deg);">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.6"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-2h5L16 7"/><circle cx="12" cy="13.5" r="3.5"/></svg>
-        <span>Add photo</span>
+        <img src="images/gallery/gallery-8.jpg" alt="Hand-painted Crook Lives bubble-letter graffiti backdrop">
+      </div>
+      <div class="photo-tile" style="transform:rotate(1deg);">
+        <div class="tape"></div>
+        <img src="images/gallery/gallery-9.jpg" alt="Crook Lives mural painted on a garage door">
+      </div>
+      <div class="photo-tile" style="transform:rotate(-2deg);">
+        <img src="images/gallery/gallery-10.jpg" alt="Crook Lives tee hanging in front of a graffiti mural">
+      </div>
+      <div class="photo-tile" style="transform:rotate(3deg);">
+        <div class="tape"></div>
+        <img src="images/gallery/gallery-11.jpg" alt="Crook Lives sticker on a city pole">
+      </div>
+      <div class="photo-tile" style="transform:rotate(-1deg);">
+        <img src="images/gallery/gallery-12.jpg" alt="Crook Lives tee worn indoors in front of framed gold records">
       </div>
     </div>
   </div>
