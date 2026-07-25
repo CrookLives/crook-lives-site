@@ -31,6 +31,16 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://crooklives.com/four-elements-one-thread</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://crooklives.com/graffiti-to-graphic-tee</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://crooklives.com/privacy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>

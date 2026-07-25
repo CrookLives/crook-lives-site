@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From the Wall to the Tee: How Our Designs Get Made — Crook Lives Blog</title>
+<meta name="description" content="How a piece of street art turns into a Crook Lives graphic tee — from first sketch to finished print.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EFE7D2; --paper-dark:#E3D8BB; --ink:#1B1710; --ink-soft:#5b5648;
+    --blue:#1E4FDE; --pink:#FF3F8F; --line: rgba(27,23,16,0.16); --maxw:1160px;
+  }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:'Work Sans', sans-serif;
+    background-image:radial-gradient(circle, rgba(27,23,16,0.06) 1px, transparent 1.2px); background-size:9px 9px; }
+  a{ color:inherit; text-decoration:none; }
+  :focus-visible{ outline:3px solid var(--blue); outline-offset:2px; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 28px; }
+  h1,h2,h3{ font-family:'Anton', sans-serif; font-weight:400; text-transform:uppercase; line-height:0.95; margin:0; }
+  p{ line-height:1.75; color:var(--ink-soft); margin:0 0 1.1em; }
+  .stamp-label{ display:inline-block; font-family:'IBM Plex Mono', monospace; font-size:0.72rem; letter-spacing:0.14em;
+    text-transform:uppercase; border:1.5px solid var(--ink); padding:3px 10px; border-radius:2px; transform:rotate(-2deg); }
+
+  header.site{ border-bottom:2px dashed var(--ink); background:var(--paper); position:sticky; top:0; z-index:50; }
+  .nav-inner{ max-width:var(--maxw); margin:0 auto; padding:18px 28px; display:flex; align-items:center; justify-content:space-between; }
+  .brand{ font-family:'Anton', sans-serif; font-size:1.3rem; text-transform:uppercase; }
+  .brand em{ font-style:normal; color:var(--pink); }
+  nav.links{ display:flex; gap:24px; }
+  nav.links a{ font-family:'IBM Plex Mono', monospace; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; border-bottom:2px solid transparent; padding-bottom:2px; }
+  nav.links a:hover{ border-color:var(--pink); }
+  nav.links a.active{ border-color:var(--blue); }
+  .menu-btn{ display:none; background:var(--paper); border:1.5px solid var(--ink); padding:6px 10px; font-family:'IBM Plex Mono',monospace; }
+  @media (max-width:840px){
+    nav.links{ position:absolute; top:100%; left:0; right:0; background:var(--paper); border-bottom:2px dashed var(--ink); flex-direction:column; gap:0; max-height:0; overflow:hidden; transition:max-height .3s ease; }
+    nav.links.open{ max-height:340px; }
+    nav.links a{ padding:14px 28px; width:100%; box-sizing:border-box; }
+    .menu-btn{ display:inline-block; }
+  }
+
+  .post-hero{ padding:56px 0 20px; max-width:760px; }
+  .post-hero h1{ font-size:clamp(2rem, 6vw, 3.2rem); margin-top:14px; }
+  .post-hero .meta{ font-family:'IBM Plex Mono', monospace; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-soft); margin-top:14px; }
+
+  article{ padding:20px 0 70px; }
+  .post-body{ max-width:680px; font-size:1.02rem; }
+  .post-body h2{ font-size:1.4rem; margin:36px 0 14px; text-transform:none; font-family:'Work Sans',sans-serif; font-weight:800; }
+  .post-body .clip{
+    height:280px; margin:28px 0;
+    background-image:radial-gradient(circle, var(--ink) 1.6px, transparent 1.8px);
+    background-size:10px 10px; background-color:var(--paper-dark);
+    border:2px dashed var(--ink);
+  }
+  .post-body .signoff{ font-family:'IBM Plex Mono', monospace; font-size:0.8rem; letter-spacing:0.06em; margin-top:32px; color:var(--ink-soft); }
+  .back{ display:inline-block; margin-top:20px; font-family:'IBM Plex Mono', monospace; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; border-bottom:2px solid var(--pink); padding-bottom:2px; }
+
+  footer{ border-top:2px dashed var(--ink); padding:60px 0 40px; }
+  .fine{ font-family:'IBM Plex Mono',monospace; font-size:0.72rem; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">CROOK <em>LIVES</em></a>
+    <button class="menu-btn" onclick="document.querySelector('.links').classList.toggle('open')">MENU</button>
+    <nav class="links">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="friends.html">Friends</a>
+      <a href="graffiti.html">Graffiti</a>
+      <a href="blog.html" class="active">Blog</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero post-hero">
+  <div class="wrap">
+    <span class="stamp-label">Dispatches</span>
+    <h1>From the Wall to the Tee: How Our Designs Get Made</h1>
+    <p class="meta">July 8, 2026</p>
+  </div>
+</section>
+
+<article>
+  <div class="wrap">
+    <div class="post-body">
+      <p>Every piece we drop starts from a hand drawn sketch before it ever touches fabric. Before there's a tee, there's a source of inspiration — a wall, a train car, a shutter, caught at the right angle before it gets buffed, painted over and gone forever.</p>
+
+      <div class="clip" aria-hidden="true"></div>
+
+      <p>We're not out there hunting for anything specific. It's more about paying attention — noticing when a color combination hits just right, when a tag's letterforms have a rhythm to them, when a whole piece has a kind of texture that photographs almost like fabric already. That's the raw material. Everything else is just translation.</p>
+
+      <h2>From the inspiration to Print</h2>
+      <p>A source of inspiration and a screen-printed tee are two very different things, and getting from one to the other takes real work. Print production means simplifying — cutting a piece down to the colors that'll actually hold up on fabric, cleaning up edges that look great sprayed but muddy when printed small, figuring out what survives being shrunk onto a chest pocket versus a full back print. Where on the tee will the design look best? What size should the subject matter be to tell the story?</p>
+
+      <h2>Respecting Where It Comes From</h2>
+      <p>Graffiti culture isn't a mood board for us — it's the reason this brand exists at all. We try to treat every design like it's still somebody's piece, not just a texture to strip-mine for a T-shirt. Every shirt, hoodie or cap is a symbol of the art and culture that has evolved from simple tags to gallery worthy murals.</p>
+
+      <p class="signoff">--KARZ</p>
+
+      <a class="back" href="blog.html">← Back to Blog</a>
+    </div>
+  </div>
+</article>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="fine">© 2026 Crook Lives — All Rights Reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
