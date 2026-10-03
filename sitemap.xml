@@ -49,5 +49,6 @@
     <loc>https://crooklives.com/terms</loc>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
-  </url>
+  </url> 
+     <url><loc>https://crooklives.com/catch-it-keep-it</loc></url>
 </urlset>
